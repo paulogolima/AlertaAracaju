@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AlertaAracaju.API/AlertaAracaju.API.csproj" />
+  <Project Path="AlertaAracaju.Aplicacao/AlertaAracaju.Aplicacao.csproj" />
+  <Project Path="AlertaAracaju.Dominio/AlertaAracaju.Dominio.csproj" />
+  <Project Path="AlertaAracaju.Infraestrutura/AlertaAracaju.Infraestrutura.csproj" />
+</Solution>
