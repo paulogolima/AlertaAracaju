@@ -1,23 +1,27 @@
 ﻿using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
+
 namespace AlertaAracaju.Infraestrutura.Repositorios;
-public class OcorrenciaRepository : IOcorrenciaRepository
+
+public class OcorrenciaRepository : IOcorrenciaRepository 
 {
     private readonly List<Ocorrencia> _ocorrencias = new List<Ocorrencia>();
 
+    // POST
     public void AdicionarOcorrencia(Ocorrencia ocorrencia)
     {
         _ocorrencias.Add(ocorrencia);
     }
 
-    public IEnumerable<Ocorrencia> ListarTodos()
+    // GET
+    public IEnumerable<Ocorrencia> ListarTodos(int skip, int take)
     {
-        return _ocorrencias;
+        return _ocorrencias.Skip(skip).Take(take);
     }
 
-    //public void EditarOcorrencia(Ocorrencia ocorrencia)
-    //{
-    //    ocorrencia.Titulo = tituloAtualizado;
-    //}
+    public Ocorrencia? ListarPorId(int id)
+    {
+        return _ocorrencias.FirstOrDefault(o => o.Id == id);
+    }
 }
 

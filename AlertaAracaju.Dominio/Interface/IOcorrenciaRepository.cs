@@ -9,6 +9,7 @@ public interface IOcorrenciaRepository
     void AdicionarOcorrencia(Ocorrencia ocorrencia);
 
     // Método que lista todas as ocorrencias (retorna uma lista de ocorrencia "IEnumerable<>")
-    IEnumerable<Ocorrencia> ListarTodos();
-    //void EditarOcorrencia(Ocorrencia dadosAtualizados);
+    IEnumerable<Ocorrencia> ListarTodos(int skip, int take);
+
+    Ocorrencia? ListarPorId(int id);
 }

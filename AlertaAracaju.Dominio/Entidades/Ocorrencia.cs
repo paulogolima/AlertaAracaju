@@ -1,4 +1,5 @@
 ﻿using AlertaAracaju.Dominio.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 
@@ -9,9 +10,10 @@ public class Ocorrencia
 {
     private static int _contadorId = 0;
 
-    public Ocorrencia(string titulo, string detalhes, StatusOcorrencia status, Coordenadas localizacao)
+    public Ocorrencia(int id ,string titulo, string detalhes, StatusOcorrencia status, Coordenadas localizacao)
     {
         _contadorId++;
+
         Id = _contadorId;
         Titulo = titulo;
         Detalhes = detalhes;
@@ -22,7 +24,9 @@ public class Ocorrencia
 
     // Propriedades
     public int Id { get; private set; }
+
     public string Titulo { get; set; }
+    [Required(ErrorMessage = "Os detalhes da ocorrência é obrigatório!")]
     public string Detalhes { get; set; }
     public DateTime DataEHora { get; set; } = DateTime.Now;
 
