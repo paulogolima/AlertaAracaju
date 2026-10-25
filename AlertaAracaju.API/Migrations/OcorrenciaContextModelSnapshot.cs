@@ -8,72 +8,71 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AlertaAracaju.API.Migrations
+namespace AlertaAracaju.API.Migrations;
+
+[DbContext(typeof(OcorrenciaContext))]
+partial class OcorrenciaContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(OcorrenciaContext))]
-    partial class OcorrenciaContextModelSnapshot : ModelSnapshot
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "10.0.13")
+            .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+        NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Ocorrencia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+        modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Ocorrencia", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataEHora")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("DataEHora")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Detalhes")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Detalhes")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                b.Property<int>("Status")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Titulo")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Ocorrencias");
-                });
+                b.ToTable("Ocorrencias");
+            });
 
-            modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Ocorrencia", b =>
-                {
-                    b.OwnsOne("AlertaAracaju.Dominio.Entidades.Coordenadas", "Localizacao", b1 =>
-                        {
-                            b1.Property<int>("OcorrenciaId")
-                                .HasColumnType("integer");
+        modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Ocorrencia", b =>
+            {
+                b.OwnsOne("AlertaAracaju.Dominio.Entidades.Coordenadas", "Localizacao", b1 =>
+                    {
+                        b1.Property<int>("OcorrenciaId")
+                            .HasColumnType("integer");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision");
+                        b1.Property<double>("Latitude")
+                            .HasColumnType("double precision");
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision");
+                        b1.Property<double>("Longitude")
+                            .HasColumnType("double precision");
 
-                            b1.HasKey("OcorrenciaId");
+                        b1.HasKey("OcorrenciaId");
 
-                            b1.ToTable("Ocorrencias");
+                        b1.ToTable("Ocorrencias");
 
-                            b1.WithOwner()
-                                .HasForeignKey("OcorrenciaId");
-                        });
+                        b1.WithOwner()
+                            .HasForeignKey("OcorrenciaId");
+                    });
 
-                    b.Navigation("Localizacao")
-                        .IsRequired();
-                });
+                b.Navigation("Localizacao")
+                    .IsRequired();
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

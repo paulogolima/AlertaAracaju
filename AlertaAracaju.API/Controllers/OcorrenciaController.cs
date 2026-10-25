@@ -1,7 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-using AlertaAracaju.Dominio.Entidades;
+﻿using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace AlertaAracaju.API.Controllers;
 

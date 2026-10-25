@@ -1,4 +1,7 @@
+using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
+using AlertaAracaju.Infraestrutura.Repositorios;
+
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<OcorrenciaContext>(opts => opts.UseNpgsql(connecti
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
 
 var app = builder.Build();
 
