@@ -30,7 +30,7 @@ public class Ocorrencia
 
     [Required(ErrorMessage = "Os detalhes da ocorrência é obrigatório!")]
     public string Detalhes { get; set; }
-    public DateTime DataEHora { get; set; } = DateTime.Now;
+    public DateTime DataEHora { get; set; } = DateTime.UtcNow;
     public StatusOcorrencia Status { get; set; }
     public Coordenadas Localizacao { get; set; }
 }

@@ -1,7 +1,9 @@
-﻿using AlertaAracaju.Dominio.Entidades;
+﻿using AlertaAracaju.Aplicacao.Dtos.Requests;
+using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
-
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 
 namespace AlertaAracaju.API.Controllers;
 
@@ -10,15 +12,18 @@ namespace AlertaAracaju.API.Controllers;
 public class OcorrenciaController : ControllerBase
 {
     private readonly IOcorrenciaRepository _repositorio;
-    public OcorrenciaController(IOcorrenciaRepository repositorio)
+    private IMapper _mapper;
+    public OcorrenciaController(IOcorrenciaRepository repositorio, IMapper mapper)
     {
+        _mapper = mapper;
         _repositorio = repositorio;
     }
 
     //POST
     [HttpPost]
-    public IActionResult AdicionarOcorrencia([FromBody] Ocorrencia ocorrencia)
+    public IActionResult AdicionarOcorrencia([FromBody] CriarOcorrenciaRequest ocorrenciaRequest)
     {
+        Ocorrencia ocorrencia = _mapper.Map<Ocorrencia>(ocorrenciaRequest);
         _repositorio.AdicionarOcorrencia(ocorrencia);
         return CreatedAtAction(nameof(ListarOcorrenciasPorId), new { id = ocorrencia.Id }, ocorrencia);
     }
