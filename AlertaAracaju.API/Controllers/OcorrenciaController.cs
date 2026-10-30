@@ -26,7 +26,6 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         skip = Math.Max(skip, 0);
         take = Math.Clamp(take, 1, 50);
         var ocorrencias = await repositorio.ListarTodosAsync(skip, take);
-        if(ocorrencias == null) return NotFound();
         return Ok(ocorrencias);
         
     }
