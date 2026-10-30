@@ -1,12 +1,13 @@
 ﻿using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlertaAracaju.Infraestrutura.Repositorios;
 
-public class OcorrenciaRepository : IOcorrenciaRepository 
+public class OcorrenciaRepository : IOcorrenciaRepository
 {
-    private OcorrenciaContext _context;
+    private readonly OcorrenciaContext _context;
 
     public OcorrenciaRepository(OcorrenciaContext context)
     {
@@ -14,20 +15,20 @@ public class OcorrenciaRepository : IOcorrenciaRepository
     }
 
     // POST
-    public void AdicionarOcorrencia(Ocorrencia ocorrencia)
+    public async Task CriarOcorrenciaAsync(Ocorrencia ocorrencia)
     {
         _context.Ocorrencias.Add(ocorrencia);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     // GET
-    public IEnumerable<Ocorrencia> ListarTodos(int skip, int take)
+    public async Task<IReadOnlyList<Ocorrencia>> ListarTodosAsync(int skip, int take)
     {
-        return _context.Ocorrencias.Skip(skip).Take(take);
+        return await _context.Ocorrencias.AsNoTracking().Skip(skip).Take(take).ToListAsync();
     }
 
-    public Ocorrencia? ListarPorId(int id)
+    public async Task<Ocorrencia?> ListarPorIdAsync(int id)
     {
-        return _context.Ocorrencias.FirstOrDefault(o => o.Id == id);
+        return await _context.Ocorrencias.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
     }
 }
