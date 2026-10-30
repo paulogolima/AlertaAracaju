@@ -31,4 +31,11 @@ public class OcorrenciaRepository : IOcorrenciaRepository
     {
         return await _context.Ocorrencias.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
     }
+
+    // PUT
+    public async Task AtualizarOcorrenciaAsync(Ocorrencia ocorrencia)
+    {
+        _context.Ocorrencias.Update(ocorrencia);
+        await _context.SaveChangesAsync();
+    }
 }

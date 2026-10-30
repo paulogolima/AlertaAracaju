@@ -37,4 +37,14 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         if (ocorrencia == null) return NotFound();
         return Ok(ocorrencia);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> AtualizarOcorrencia(int id, [FromBody] AtualizarOcorrenciaRequest ocorrenciaRequest)
+    {
+        var ocorrencia = await repositorio.ListarPorIdAsync(id);
+        if (ocorrencia == null) return NotFound();
+        mapper.Map(ocorrenciaRequest, ocorrencia);
+        await repositorio.AtualizarOcorrenciaAsync(ocorrencia);
+        return Ok(ocorrencia);
+    }
 }   

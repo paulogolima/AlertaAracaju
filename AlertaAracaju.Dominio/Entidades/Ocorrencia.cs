@@ -24,7 +24,7 @@ public class Ocorrencia
     public int Id { get; private set; }
     public string Titulo { get; private set; }
     public string Detalhes { get; private set; }
-    public DateTime DataEHora { get; private set; }
+    public DateTime DataEHora { get; private set; } = DateTime.UtcNow;
     public Categoria Categoria { get; private set; }
     public StatusOcorrencia Status { get; private set; }
     public Urgencia Urgencia { get; private set; }
