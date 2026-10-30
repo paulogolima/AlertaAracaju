@@ -30,7 +30,6 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         
     }
 
-
     [HttpGet("{id}")]
     public async Task<IActionResult> ListarOcorrenciasPorId(int id)
     {
