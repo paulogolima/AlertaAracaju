@@ -39,4 +39,4 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         if (ocorrencia == null) return NotFound();
         return Ok(ocorrencia);
     }
-}
+}   
