@@ -1,5 +1,4 @@
 ﻿using AlertaAracaju.Dominio.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace AlertaAracaju.Dominio.Entidades;
 public class Ocorrencia
@@ -32,7 +31,6 @@ public class Ocorrencia
     public Coordenadas Localizacao { get; private set; }
 }
 
-[Owned]
 public class Coordenadas
 {
     protected Coordenadas()
