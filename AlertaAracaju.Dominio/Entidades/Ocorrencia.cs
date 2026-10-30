@@ -23,16 +23,14 @@ public class Ocorrencia
     }
 
     // Propriedades
-    [Key]
-    [Required]
     public int Id { get; private set; }
-    public string Titulo { get; set; }
-
-    [Required(ErrorMessage = "Os detalhes da ocorrência é obrigatório!")]
-    public string Detalhes { get; set; }
-    public DateTime DataEHora { get; set; } = DateTime.UtcNow;
-    public StatusOcorrencia Status { get; set; }
-    public Coordenadas Localizacao { get; set; }
+    public string Titulo { get; private set; }
+    public string Detalhes { get; private set; }
+    public DateTime DataEHora { get; private set; }
+    public Categoria Categoria { get; private set; }
+    public StatusOcorrencia Status { get; private set; }
+    public Urgencia Urgencia { get; private set; }
+    public Coordenadas Localizacao { get; private set; }
 }
 
 // Classe que guarda a coordenada do local
@@ -45,8 +43,10 @@ public class Coordenadas
 
     public Coordenadas(double latitude, double longitude)
     {
+        Latitude = latitude;
+        Longitude = longitude;
     }
 
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
+    public double Latitude { get; private set; }
+    public double Longitude { get; private set; }
 }
