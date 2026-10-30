@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlertaAracaju.API.Migrations
 {
     [DbContext(typeof(OcorrenciaContext))]
-    [Migration("20261030205849_CriaTabelaOcorrencia")]
-    partial class CriaTabelaOcorrencia
+    [Migration("20261030230754_CriarTabelaOcorrencia")]
+    partial class CriarTabelaOcorrencia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,9 @@ namespace AlertaAracaju.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Categoria")
-                        .HasColumnType("integer");
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DataEHora")
                         .HasColumnType("timestamp with time zone");
@@ -43,15 +44,17 @@ namespace AlertaAracaju.API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Urgencia")
-                        .HasColumnType("integer");
+                    b.Property<string>("Urgencia")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

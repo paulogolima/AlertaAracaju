@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlertaAracaju.API.Migrations
 {
     /// <inheritdoc />
-    public partial class CriaTabelaOcorrencia : Migration
+    public partial class CriarTabelaOcorrencia : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,9 +21,9 @@ namespace AlertaAracaju.API.Migrations
                     Titulo = table.Column<string>(type: "text", nullable: false),
                     Detalhes = table.Column<string>(type: "text", nullable: false),
                     DataEHora = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Categoria = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    Urgencia = table.Column<int>(type: "integer", nullable: false),
+                    Categoria = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    Urgencia = table.Column<string>(type: "text", nullable: false),
                     Localizacao_Latitude = table.Column<double>(type: "double precision", nullable: false),
                     Localizacao_Longitude = table.Column<double>(type: "double precision", nullable: false)
                 },
