@@ -3,42 +3,39 @@ using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
 
 namespace AlertaAracaju.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OcorrenciaController : ControllerBase
+public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper mapper) : ControllerBase
 {
-    private readonly IOcorrenciaRepository _repositorio;
-    private IMapper _mapper;
-    public OcorrenciaController(IOcorrenciaRepository repositorio, IMapper mapper)
-    {
-        _mapper = mapper;
-        _repositorio = repositorio;
-    }
-
     //POST
     [HttpPost]
-    public IActionResult AdicionarOcorrencia([FromBody] CriarOcorrenciaRequest ocorrenciaRequest)
+    public async Task<IActionResult> CriarOcorrencia([FromBody] CriarOcorrenciaRequest ocorrenciaRequest)
     {
-        Ocorrencia ocorrencia = _mapper.Map<Ocorrencia>(ocorrenciaRequest);
-        _repositorio.AdicionarOcorrencia(ocorrencia);
+        Ocorrencia ocorrencia = mapper.Map<Ocorrencia>(ocorrenciaRequest);
+        await repositorio.CriarOcorrenciaAsync(ocorrencia);
         return CreatedAtAction(nameof(ListarOcorrenciasPorId), new { id = ocorrencia.Id }, ocorrencia);
     }
 
     //GET
     [HttpGet]
-    public IEnumerable<Ocorrencia> ListarTodasOcorrencias([FromQuery] int skip = 0, [FromQuery] int take = 5)
+    public async Task<IActionResult> ListarTodasOcorrencias([FromQuery] int skip = 0, [FromQuery] int take = 5)
     {
-        return _repositorio.ListarTodos(skip, take);
+        skip = Math.Max(skip, 0);
+        take = Math.Clamp(take, 1, 50);
+        var ocorrencias = await repositorio.ListarTodosAsync(skip, take);
+        if(ocorrencias == null) return NotFound();
+        return Ok(ocorrencias);
+        
     }
 
+
     [HttpGet("{id}")]
-    public IActionResult ListarOcorrenciasPorId(int id)
+    public async Task<IActionResult> ListarOcorrenciasPorId(int id)
     {
-        var ocorrencia = _repositorio.ListarPorId(id);
+        var ocorrencia = await repositorio.ListarPorIdAsync(id);
         if (ocorrencia == null) return NotFound();
         return Ok(ocorrencia);
     }
