@@ -1,15 +1,14 @@
 ﻿using AlertaAracaju.Dominio.Enums;
-
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace AlertaAracaju.Dominio.Entidades;
-
-// Classe onde é guardado todo que uma ocorrencia precisa.
 public class Ocorrencia
 {
     protected Ocorrencia()
     {
+        Titulo = null!;
+        Detalhes = null!;
+        Localizacao = null!;
     }
 
     public Ocorrencia(int id, string titulo, string detalhes, StatusOcorrencia status, Coordenadas localizacao)
@@ -33,7 +32,6 @@ public class Ocorrencia
     public Coordenadas Localizacao { get; private set; }
 }
 
-// Classe que guarda a coordenada do local
 [Owned]
 public class Coordenadas
 {
