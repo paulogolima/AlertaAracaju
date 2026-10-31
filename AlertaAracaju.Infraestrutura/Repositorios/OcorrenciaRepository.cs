@@ -5,37 +5,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertaAracaju.Infraestrutura.Repositorios;
 
-public class OcorrenciaRepository : IOcorrenciaRepository
+public class OcorrenciaRepository(OcorrenciaContext context) : IOcorrenciaRepository
 {
-    private readonly OcorrenciaContext _context;
-
-    public OcorrenciaRepository(OcorrenciaContext context)
-    {
-        _context = context;
-    }
 
     // POST
     public async Task CriarOcorrenciaAsync(Ocorrencia ocorrencia)
     {
-        _context.Ocorrencias.Add(ocorrencia);
-        await _context.SaveChangesAsync();
+        context.Ocorrencias.Add(ocorrencia);
+        await context.SaveChangesAsync();
     }
 
     // GET
     public async Task<IReadOnlyList<Ocorrencia>> ListarTodosAsync(int skip, int take)
     {
-        return await _context.Ocorrencias.AsNoTracking().Skip(skip).Take(take).ToListAsync();
+        return await context.Ocorrencias.AsNoTracking().Skip(skip).Take(take).ToListAsync();
     }
 
     public async Task<Ocorrencia?> ListarPorIdAsync(int id)
     {
-        return await _context.Ocorrencias.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
+        return await context.Ocorrencias.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
     }
 
     // PUT
     public async Task AtualizarOcorrenciaAsync(Ocorrencia ocorrencia)
     {
-        _context.Ocorrencias.Update(ocorrencia);
-        await _context.SaveChangesAsync();
+        context.Ocorrencias.Update(ocorrencia);
+        await context.SaveChangesAsync();
     }
 }
