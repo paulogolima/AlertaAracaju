@@ -45,6 +45,6 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         if (ocorrencia == null) return NotFound();
         mapper.Map(ocorrenciaRequest, ocorrencia);
         await repositorio.AtualizarOcorrenciaAsync(ocorrencia);
-        return Ok(ocorrencia);
+        return NoContent();
     }
 }   
