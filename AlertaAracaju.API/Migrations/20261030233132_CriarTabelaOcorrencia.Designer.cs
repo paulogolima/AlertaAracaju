@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlertaAracaju.API.Migrations
 {
     [DbContext(typeof(OcorrenciaContext))]
-    [Migration("20261030230754_CriarTabelaOcorrencia")]
+    [Migration("20261030233132_CriarTabelaOcorrencia")]
     partial class CriarTabelaOcorrencia
     {
         /// <inheritdoc />
@@ -32,6 +32,9 @@ namespace AlertaAracaju.API.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Apoio")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Categoria")
                         .IsRequired()

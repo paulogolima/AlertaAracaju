@@ -30,6 +30,9 @@ namespace AlertaAracaju.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Apoio")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Categoria")
                         .IsRequired()
                         .HasColumnType("text");

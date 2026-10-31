@@ -24,6 +24,7 @@ namespace AlertaAracaju.API.Migrations
                     Categoria = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
                     Urgencia = table.Column<string>(type: "text", nullable: false),
+                    Apoio = table.Column<int>(type: "integer", nullable: false),
                     Localizacao_Latitude = table.Column<double>(type: "double precision", nullable: false),
                     Localizacao_Longitude = table.Column<double>(type: "double precision", nullable: false)
                 },

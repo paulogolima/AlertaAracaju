@@ -10,5 +10,6 @@ public class OcorrenciaProfile : Profile
     {
         CreateMap<CriarOcorrenciaRequest, Ocorrencia>();
         CreateMap<CoordenadasRequest, Coordenadas>();
+        CreateMap<AtualizarOcorrenciaRequest, Ocorrencia>();
     }
 }
