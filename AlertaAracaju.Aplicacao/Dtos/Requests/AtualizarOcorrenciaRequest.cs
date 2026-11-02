@@ -13,4 +13,16 @@ public class AtualizarOcorrenciaRequest
 
     [Required(ErrorMessage = "A localização é obrigatória!")]
     public CoordenadasRequest? Localizacao { get; set; }
+
+    [Required(ErrorMessage = "A categoria é obrigatória!")]
+    [Range(0, int.MaxValue, ErrorMessage = "A categoria deve ser válida.")]
+    public int? Categoria { get; set; }
+
+    [Required(ErrorMessage = "A urgência é obrigatória!")]
+    [Range(0, int.MaxValue, ErrorMessage = "A urgência deve ser válida.")]
+    public int? Urgencia { get; set; }
+
+    [Required(ErrorMessage = "O status é obrigatório!")]
+    [Range(0, int.MaxValue, ErrorMessage = "O status deve ser válido.")]
+    public int? Status { get; set; }
 }

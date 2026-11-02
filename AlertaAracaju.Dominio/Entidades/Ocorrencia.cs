@@ -1,5 +1,4 @@
 ﻿using AlertaAracaju.Dominio.Enums;
-using System.Reflection.Metadata.Ecma335;
 
 namespace AlertaAracaju.Dominio.Entidades;
 public class Ocorrencia
@@ -23,7 +22,6 @@ public class Ocorrencia
         Localizacao = localizacao;
     }
 
-    // Propriedades
     public int Id { get; private set; }
     public string Titulo { get; private set; }
     public string Detalhes { get; private set; }

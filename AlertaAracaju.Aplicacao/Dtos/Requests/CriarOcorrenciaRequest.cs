@@ -13,4 +13,10 @@ public class CriarOcorrenciaRequest
 
     [Required(ErrorMessage = "A localização é obrigatória!")]
     public CoordenadasRequest? Localizacao { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "A categoria deve ser válida.")]
+    public int? Categoria { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "A urgência deve ser válida.")]
+    public int? Urgencia { get; set; }
 }

@@ -1,4 +1,5 @@
 using AlertaAracaju.Aplicacao.Profiles;
+using AlertaAracaju.Aplicacao.Servicos;
 using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
 using AlertaAracaju.Infraestrutura.Repositorios;
@@ -12,26 +13,44 @@ builder.Services.AddDbContext<OcorrenciaContext>(opts =>
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(OcorrenciaProfile).Assembly);
 
-// Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddProblemDetails();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
+
+builder.Services.AddHttpClient<IServicoIA, GeminiAIService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(5);
+});
 
 var app = builder.Build();
 
 app.UseExceptionHandler();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseAuthorization();
 app.MapControllers();
 

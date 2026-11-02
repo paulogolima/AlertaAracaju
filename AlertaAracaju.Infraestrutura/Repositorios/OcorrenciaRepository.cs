@@ -7,15 +7,12 @@ namespace AlertaAracaju.Infraestrutura.Repositorios;
 
 public class OcorrenciaRepository(OcorrenciaContext context) : IOcorrenciaRepository
 {
-
-    // POST
     public async Task CriarOcorrenciaAsync(Ocorrencia ocorrencia)
     {
         context.Ocorrencias.Add(ocorrencia);
         await context.SaveChangesAsync();
     }
 
-    // GET
     public async Task<IReadOnlyList<Ocorrencia>> ListarTodosAsync(int skip, int take)
     {
         return await context.Ocorrencias.AsNoTracking().Skip(skip).Take(take).ToListAsync();
@@ -26,10 +23,21 @@ public class OcorrenciaRepository(OcorrenciaContext context) : IOcorrenciaReposi
         return await context.Ocorrencias.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
     }
 
-    // PUT
     public async Task AtualizarOcorrenciaAsync(Ocorrencia ocorrencia)
     {
         context.Ocorrencias.Update(ocorrencia);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task AtualizarOcorrenciaParcialAsync(Ocorrencia ocorrencia)
+    {
+        context.Ocorrencias.Update(ocorrencia);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task DeletarOcorrenciaAsync(Ocorrencia ocorrencia)
+    {
+        context.Ocorrencias.Remove(ocorrencia);
         await context.SaveChangesAsync();
     }
 }
