@@ -1,4 +1,4 @@
-using AlertaAracaju.Aplicacao.Dtos.Responses;
+using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
 
 namespace AlertaAracaju.Aplicacao.Servicos;
 

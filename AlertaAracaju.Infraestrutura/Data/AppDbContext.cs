@@ -3,14 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertaAracaju.Infraestrutura.Data;
 
-public class OcorrenciaContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> opts) : DbContext(opts)
 {
-    public OcorrenciaContext(DbContextOptions<OcorrenciaContext> opts) : base(opts)
-    {
-    }
-
     public DbSet<Ocorrencia> Ocorrencias { get; set; }
-
+    public DbSet<Usuario> Usuarios { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -1,7 +1,7 @@
-using AlertaAracaju.Aplicacao.Dtos.Responses;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
+using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
 
 namespace AlertaAracaju.Aplicacao.Servicos;
 

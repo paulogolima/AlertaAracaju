@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AlertaAracaju.Aplicacao.Dtos.Requests;
+namespace AlertaAracaju.Aplicacao.Dtos.Requests.Ocorrencia;
 
 public class CoordenadasRequest
 {

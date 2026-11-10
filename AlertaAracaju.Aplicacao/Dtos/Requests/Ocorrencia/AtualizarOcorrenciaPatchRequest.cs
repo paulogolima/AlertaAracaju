@@ -1,4 +1,4 @@
-namespace AlertaAracaju.Aplicacao.Dtos.Requests;
+namespace AlertaAracaju.Aplicacao.Dtos.Requests.Ocorrencia;
 
 public class AtualizarOcorrenciaPatchRequest
 {

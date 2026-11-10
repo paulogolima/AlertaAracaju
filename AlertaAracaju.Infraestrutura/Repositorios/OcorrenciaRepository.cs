@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertaAracaju.Infraestrutura.Repositorios;
 
-public class OcorrenciaRepository(OcorrenciaContext context) : IOcorrenciaRepository
+public class OcorrenciaRepository(AppDbContext context) : IOcorrenciaRepository
 {
     public async Task CriarOcorrenciaAsync(Ocorrencia ocorrencia)
     {

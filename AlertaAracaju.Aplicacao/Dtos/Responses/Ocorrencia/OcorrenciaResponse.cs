@@ -1,4 +1,4 @@
-namespace AlertaAracaju.Aplicacao.Dtos.Responses;
+namespace AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
 
 public class OcorrenciaResponse
 {
