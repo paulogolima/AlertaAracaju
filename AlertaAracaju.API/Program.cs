@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("OcorrenciaConnection");
-builder.Services.AddDbContext<OcorrenciaContext>(opts =>
+builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseNpgsql(connectionString, b => b.MigrationsAssembly("AlertaAracaju.API")));
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(OcorrenciaProfile).Assembly);
+builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
 
 builder.Services.AddCors(options =>
 {

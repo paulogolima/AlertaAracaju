@@ -11,9 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AlertaAracaju.API.Migrations
 {
-    [DbContext(typeof(OcorrenciaContext))]
-    [Migration("20261030233132_CriarTabelaOcorrencia")]
-    partial class CriarTabelaOcorrencia
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20261110182401_AdicionarTabelaUsuarioEOcorrencia")]
+    partial class AdicionarTabelaUsuarioEOcorrencia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,34 @@ namespace AlertaAracaju.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ocorrencias");
+                });
+
+            modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataEHora")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenhaHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("AlertaAracaju.Dominio.Entidades.Ocorrencia", b =>

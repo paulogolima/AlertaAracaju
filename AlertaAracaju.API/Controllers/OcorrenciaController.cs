@@ -1,5 +1,6 @@
-﻿using AlertaAracaju.Aplicacao.Dtos.Requests;
-using AlertaAracaju.Aplicacao.Dtos.Responses;
+﻿using AlertaAracaju.Aplicacao.Dtos.Requests.Ocorrencia;
+using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
+
 using AlertaAracaju.Aplicacao.Servicos;
 using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Enums;

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlertaAracaju.API.Migrations
 {
     /// <inheritdoc />
-    public partial class CriarTabelaOcorrencia : Migration
+    public partial class AdicionarTabelaUsuarioEOcorrencia : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +32,22 @@ namespace AlertaAracaju.API.Migrations
                 {
                     table.PrimaryKey("PK_Ocorrencias", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    SenhaHash = table.Column<string>(type: "text", nullable: false),
+                    DataEHora = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -39,6 +55,9 @@ namespace AlertaAracaju.API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Ocorrencias");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
         }
     }
 }
