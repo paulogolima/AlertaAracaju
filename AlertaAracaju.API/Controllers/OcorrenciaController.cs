@@ -20,28 +20,13 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
     {
         var analise = await servicoIA.AnalisarOcorrenciaAsync(requisicao.Titulo!, requisicao.Detalhes!);
 
-        if (!Enum.TryParse<StatusOcorrencia>(analise.Status, ignoreCase: true, out var status))
-        {
-            status = StatusOcorrencia.Pendente;
-        }
-
-        if (!Enum.TryParse<Categoria>(analise.Categoria, ignoreCase: true, out var categoria))
-        {
-            categoria = Categoria.Outros;
-        }
-
-        if (!Enum.TryParse<Urgencia>(analise.Urgencia, ignoreCase: true, out var urgencia))
-        {
-            urgencia = Urgencia.Media;
-        }
-
         var ocorrencia = new Ocorrencia(
             id: 0,
             titulo: analise.Titulo,
             detalhes: analise.Detalhes,
-            status: status,
-            categoria: categoria,
-            urgencia: urgencia,
+            status: StatusOcorrencia.Pendente,
+            categoria: analise.Categoria,
+            urgencia: analise.Urgencia,
             localizacao: mapper.Map<Coordenadas>(requisicao.Localizacao!)
         );
 

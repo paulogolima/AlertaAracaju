@@ -1,5 +1,4 @@
 ﻿using AlertaAracaju.Dominio.Enums;
-using System.Net.NetworkInformation;
 
 namespace AlertaAracaju.Dominio.Entidades;
 public class Ocorrencia

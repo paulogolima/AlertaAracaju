@@ -1,34 +1,45 @@
 using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
+using System.Text.Json.Serialization;
 using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
+using Microsoft.Extensions.Configuration;
 
 namespace AlertaAracaju.Aplicacao.Servicos;
 
 public class GeminiAIService(HttpClient httpClient, IConfiguration configuracao) : IServicoIA
 {
-    private readonly HttpClient _httpClient = httpClient;
-    private readonly string _chaveAPI = configuracao["GeminiAI:ApiKey"] ?? throw new InvalidOperationException("GeminiAI:ApiKey não configurada");
+    private const string Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent";
+
+    private static readonly JsonSerializerOptions OpcoesJson = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
+
+    private readonly string _chaveAPI = configuracao["GeminiAI:ApiKey"]
+        ?? throw new InvalidOperationException("GeminiAI:ApiKey não configurada");
 
     public async Task<AnaliseOcorrenciaResponse> AnalisarOcorrenciaAsync(string titulo, string detalhes)
     {
-        var prompt = $@"Você é um assistente encarregado de analisar ocorrências urbanas.
-Reescreva o título e os detalhes em linguagem formal e objetiva. Também classifique a categoria e a urgência.
+        var prompt = $$"""
+            Você é um assistente encarregado de analisar ocorrências urbanas.
+            Reescreva o título e os detalhes em linguagem formal e objetiva. Também classifique a categoria e a urgência.
 
-Entradas:
-- Título original: {titulo}
-- Detalhes originais: {detalhes}
+            Entradas:
+            - Título original: {{titulo}}
+            - Detalhes originais: {{detalhes}}
 
-Opções válidas de Categoria: ""AsfaltoEBuracos"", ""IluminacaoPublica"", ""LixoEEntulho"", ""RiscoEletrico"", ""VazamentoDeAgua"", ""Outros"".
-Opções válidas de Urgência: ""Baixa"", ""Media"", ""Alta"".
+            Opções válidas de Categoria: "AsfaltoEBuracos", "IluminacaoPublica", "LixoEEntulho", "RiscoEletrico", "VazamentoDeAgua", "Outros".
+            Opções válidas de Urgência: "Baixa", "Media", "Alta".
 
-Retorne APENAS um JSON neste formato:
-{{
-  ""titulo"": ""Título formal aqui"",
-  ""detalhes"": ""Detalhes formais aqui"",
-  ""categoria"": ""IluminacaoPublica"",
-  ""urgencia"": ""Media""
-}}";
+            Retorne APENAS um JSON neste formato:
+            {
+              "titulo": "Título formal aqui",
+              "detalhes": "Detalhes formais aqui",
+              "categoria": "IluminacaoPublica",
+              "urgencia": "Media"
+            }
+            """;
 
         var corpoRequisicao = new
         {
@@ -38,12 +49,13 @@ Retorne APENAS um JSON neste formato:
 
         try
         {
-            var jsonEnvio = JsonSerializer.Serialize(corpoRequisicao);
-            using var conteudo = new StringContent(jsonEnvio, Encoding.UTF8, "application/json");
+            using var requisicao = new HttpRequestMessage(HttpMethod.Post, Url)
+            {
+                Content = new StringContent(JsonSerializer.Serialize(corpoRequisicao), Encoding.UTF8, "application/json")
+            };
+            requisicao.Headers.Add("x-goog-api-key", _chaveAPI);
 
-            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key={_chaveAPI}";
-
-            var resposta = await _httpClient.PostAsync(url, conteudo);
+            var resposta = await httpClient.SendAsync(requisicao);
             var textoResposta = await resposta.Content.ReadAsStringAsync();
 
             if (!resposta.IsSuccessStatusCode)
@@ -60,17 +72,13 @@ Retorne APENAS um JSON neste formato:
                 .GetProperty("text")
                 .GetString()!;
 
-            using var docAnalise = JsonDocument.Parse(jsonIa);
-            var raiz = docAnalise.RootElement;
+            var analise = JsonSerializer.Deserialize<AnaliseOcorrenciaResponse>(jsonIa, OpcoesJson)
+                ?? throw new JsonException("A IA devolveu um JSON vazio.");
 
-            return new AnaliseOcorrenciaResponse
-            {
-                Titulo = raiz.GetProperty("titulo").GetString() ?? titulo,
-                Detalhes = raiz.GetProperty("detalhes").GetString() ?? detalhes,
-                Categoria = raiz.GetProperty("categoria").GetString() ?? "Outros",
-                Urgencia = raiz.GetProperty("urgencia").GetString() ?? "Media",
-                Status = "Pendente"
-            };
+            if (string.IsNullOrWhiteSpace(analise.Titulo)) analise.Titulo = titulo;
+            if (string.IsNullOrWhiteSpace(analise.Detalhes)) analise.Detalhes = detalhes;
+
+            return analise;
         }
         catch (Exception ex)
         {
@@ -79,15 +87,9 @@ Retorne APENAS um JSON neste formato:
         }
     }
 
-    private static AnaliseOcorrenciaResponse ObterPadrao(string titulo, string detalhes)
+    private static AnaliseOcorrenciaResponse ObterPadrao(string titulo, string detalhes) => new()
     {
-        return new AnaliseOcorrenciaResponse
-        {
-            Titulo = titulo,
-            Detalhes = detalhes,
-            Categoria = "Outros",
-            Urgencia = "Media",
-            Status = "Pendente"
-        };
-    }
+        Titulo = titulo,
+        Detalhes = detalhes
+    };
 }
