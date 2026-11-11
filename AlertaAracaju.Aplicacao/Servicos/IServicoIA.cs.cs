@@ -4,6 +4,6 @@ namespace AlertaAracaju.Aplicacao.Servicos;
 
 public interface IServicoIA
 {
-    Task<AnaliseOcorrenciaResposta> AnalisarOcorrenciaAsync(string titulo, string detalhes);
+    Task<AnaliseOcorrenciaResponse> AnalisarOcorrenciaAsync(string titulo, string detalhes);
 }
 

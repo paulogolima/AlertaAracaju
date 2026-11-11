@@ -83,7 +83,7 @@ public class UsuarioController(IUsuarioRepository repositorio, IMapper mapper) :
         }
 
         mapper.Map(usuarioParaAtualizar, usuario);
-        await repositorio.AtualizarUsuarioParcialAsync(usuario);
+        await repositorio.AtualizarUsuarioAsync(usuario);
         return NoContent();
     }
 

@@ -15,7 +15,12 @@ public class UsuarioRepository(AppDbContext context) : IUsuarioRepository
 
     public async Task<IReadOnlyList<Usuario>> ListarTodosAsync(int skip, int take)
     {
-        return await context.Usuarios.AsNoTracking().Skip(skip).Take(take).ToListAsync();
+        return await context.Usuarios
+            .AsNoTracking()
+            .OrderBy(u => u.Id)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
     }
 
     public async Task<Usuario?> ListarPorIdAsync(int id)
@@ -24,12 +29,6 @@ public class UsuarioRepository(AppDbContext context) : IUsuarioRepository
     }
 
     public async Task AtualizarUsuarioAsync(Usuario usuario)
-    {
-        context.Usuarios.Update(usuario);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task AtualizarUsuarioParcialAsync(Usuario usuario)
     {
         context.Usuarios.Update(usuario);
         await context.SaveChangesAsync();

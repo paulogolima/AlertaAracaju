@@ -106,7 +106,7 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         }
 
         mapper.Map(ocorrenciaParaAtualizar, ocorrencia);
-        await repositorio.AtualizarOcorrenciaParcialAsync(ocorrencia);
+        await repositorio.AtualizarOcorrenciaAsync(ocorrencia);
         return NoContent();
     }
 
@@ -116,22 +116,8 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         var ocorrencia = await repositorio.ListarPorIdAsync(id);
         if (ocorrencia == null) return NotFound();
 
-        if (!Enum.TryParse<StatusOcorrencia>(requisicao.Status, ignoreCase: true, out var novoStatus))
-        {
-            return BadRequest("Status inválido");
-        }
-
-        var ocorrenciaAtualizada = new Ocorrencia(
-            id: ocorrencia.Id,
-            titulo: ocorrencia.Titulo,
-            detalhes: ocorrencia.Detalhes,
-            status: novoStatus,
-            categoria: ocorrencia.Categoria,
-            urgencia: ocorrencia.Urgencia,
-            localizacao: ocorrencia.Localizacao
-        );
-
-        await repositorio.AtualizarOcorrenciaAsync(ocorrenciaAtualizada);
+        ocorrencia.AlterarStatus(requisicao.Status!.Value);
+        await repositorio.AtualizarOcorrenciaAsync(ocorrencia);
         return NoContent();
     }
 

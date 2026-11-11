@@ -1,4 +1,5 @@
 ﻿using AlertaAracaju.Dominio.Enums;
+using System.Net.NetworkInformation;
 
 namespace AlertaAracaju.Dominio.Entidades;
 public class Ocorrencia
@@ -31,6 +32,11 @@ public class Ocorrencia
     public Urgencia Urgencia { get; private set; }
     public int Apoio { get; private set; } = 0;
     public Coordenadas Localizacao { get; private set; }
+
+    public void AlterarStatus(StatusOcorrencia novoStatus)
+    {
+        Status = novoStatus;
+    }
 }
 
 public class Coordenadas
@@ -47,4 +53,5 @@ public class Coordenadas
 
     public double Latitude { get; private set; }
     public double Longitude { get; private set; }
+
 }

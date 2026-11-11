@@ -8,6 +8,5 @@ public interface IOcorrenciaRepository
     Task<IReadOnlyList<Ocorrencia>> ListarTodosAsync(int skip, int take);
     Task<Ocorrencia?> ListarPorIdAsync(int id);
     Task AtualizarOcorrenciaAsync(Ocorrencia ocorrencia);
-    Task AtualizarOcorrenciaParcialAsync(Ocorrencia ocorrencia);
     Task DeletarOcorrenciaAsync(Ocorrencia ocorrencia);
 }

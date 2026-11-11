@@ -8,6 +8,5 @@ public interface IUsuarioRepository
     Task<IReadOnlyList<Usuario>> ListarTodosAsync(int skip, int take);
     Task<Usuario?> ListarPorIdAsync(int id);
     Task AtualizarUsuarioAsync(Usuario usuario);
-    Task AtualizarUsuarioParcialAsync(Usuario usuario);
     Task DeletarUsuarioAsync(Usuario usuario);
 }

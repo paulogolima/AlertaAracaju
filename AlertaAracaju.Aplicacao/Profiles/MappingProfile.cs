@@ -23,6 +23,9 @@ public class MappingProfile : Profile
 
         // Mapeamentos de Usuario
         CreateMap<CriarUsuarioRequest, Usuario>();
+        CreateMap<AtualizarUsuarioRequest, Usuario>();
+        CreateMap<AtualizarUsuarioPatchRequest, Usuario>()
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         CreateMap<Usuario, UsuarioResponse>();
     }
 }

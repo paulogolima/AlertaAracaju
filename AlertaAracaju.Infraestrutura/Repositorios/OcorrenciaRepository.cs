@@ -15,7 +15,12 @@ public class OcorrenciaRepository(AppDbContext context) : IOcorrenciaRepository
 
     public async Task<IReadOnlyList<Ocorrencia>> ListarTodosAsync(int skip, int take)
     {
-        return await context.Ocorrencias.AsNoTracking().Skip(skip).Take(take).ToListAsync();
+        return await context.Ocorrencias
+            .AsNoTracking()
+            .OrderByDescending(o => o.Id)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
     }
 
     public async Task<Ocorrencia?> ListarPorIdAsync(int id)
@@ -24,12 +29,6 @@ public class OcorrenciaRepository(AppDbContext context) : IOcorrenciaRepository
     }
 
     public async Task AtualizarOcorrenciaAsync(Ocorrencia ocorrencia)
-    {
-        context.Ocorrencias.Update(ocorrencia);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task AtualizarOcorrenciaParcialAsync(Ocorrencia ocorrencia)
     {
         context.Ocorrencias.Update(ocorrencia);
         await context.SaveChangesAsync();

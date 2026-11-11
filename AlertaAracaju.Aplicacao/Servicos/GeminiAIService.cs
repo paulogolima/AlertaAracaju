@@ -5,18 +5,12 @@ using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
 
 namespace AlertaAracaju.Aplicacao.Servicos;
 
-public class GeminiAIService : IServicoIA
+public class GeminiAIService(HttpClient httpClient, IConfiguration configuracao) : IServicoIA
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _chaveAPI;
+    private readonly HttpClient _httpClient = httpClient;
+    private readonly string _chaveAPI = configuracao["GeminiAI:ApiKey"] ?? throw new InvalidOperationException("GeminiAI:ApiKey não configurada");
 
-    public GeminiAIService(HttpClient httpClient, IConfiguration configuracao)
-    {
-        _httpClient = httpClient;
-        _chaveAPI = configuracao["GeminiAI:ApiKey"] ?? throw new InvalidOperationException("GeminiAI:ApiKey não configurada");
-    }
-
-    public async Task<AnaliseOcorrenciaResposta> AnalisarOcorrenciaAsync(string titulo, string detalhes)
+    public async Task<AnaliseOcorrenciaResponse> AnalisarOcorrenciaAsync(string titulo, string detalhes)
     {
         var prompt = $@"Você é um assistente encarregado de analisar ocorrências urbanas.
 Reescreva o título e os detalhes em linguagem formal e objetiva. Também classifique a categoria e a urgência.
@@ -69,7 +63,7 @@ Retorne APENAS um JSON neste formato:
             using var docAnalise = JsonDocument.Parse(jsonIa);
             var raiz = docAnalise.RootElement;
 
-            return new AnaliseOcorrenciaResposta
+            return new AnaliseOcorrenciaResponse
             {
                 Titulo = raiz.GetProperty("titulo").GetString() ?? titulo,
                 Detalhes = raiz.GetProperty("detalhes").GetString() ?? detalhes,
@@ -85,9 +79,9 @@ Retorne APENAS um JSON neste formato:
         }
     }
 
-    private static AnaliseOcorrenciaResposta ObterPadrao(string titulo, string detalhes)
+    private static AnaliseOcorrenciaResponse ObterPadrao(string titulo, string detalhes)
     {
-        return new AnaliseOcorrenciaResposta
+        return new AnaliseOcorrenciaResponse
         {
             Titulo = titulo,
             Detalhes = detalhes,

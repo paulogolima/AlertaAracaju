@@ -4,6 +4,7 @@ using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
 using AlertaAracaju.Infraestrutura.Repositorios;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(opts =>
+    opts.SerializerSettings.Converters.Add(new StringEnumConverter { AllowIntegerValues = false }));
 
 builder.Services.AddProblemDetails();
 
 builder.Services.AddOpenApi();
+
 builder.Services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.AddHttpClient<IServicoIA, GeminiAIService>(client =>
 {

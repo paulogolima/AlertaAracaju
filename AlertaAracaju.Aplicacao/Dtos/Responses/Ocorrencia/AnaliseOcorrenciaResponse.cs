@@ -1,6 +1,6 @@
 namespace AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
 
-public class AnaliseOcorrenciaResposta
+public class AnaliseOcorrenciaResponse
 {
     public string Titulo { get; set; } = string.Empty;
     public string Detalhes { get; set; } = string.Empty;
