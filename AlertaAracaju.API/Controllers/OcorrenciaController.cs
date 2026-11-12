@@ -64,37 +64,6 @@ public class OcorrenciaController(IOcorrenciaRepository repositorio, IMapper map
         return NoContent();
     }
 
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> AtualizarOcorrenciaParcial(int id, JsonPatchDocument<AtualizarOcorrenciaPatchRequest> patch)
-    {
-        if (patch == null)
-        {
-            return BadRequest("O documento de patch não pode ser nulo.");
-        }
-
-        var ocorrencia = await repositorio.ListarPorIdAsync(id);
-        if (ocorrencia == null) return NotFound();
-        var ocorrenciaParaAtualizar = new AtualizarOcorrenciaPatchRequest();
-
-        try
-        {
-            patch.ApplyTo(ocorrenciaParaAtualizar, ModelState);
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest($"Operação de patch inválida: {ex.Message}");
-        }
-
-        if (!TryValidateModel(ocorrenciaParaAtualizar))
-        {
-            return ValidationProblem(ModelState);
-        }
-
-        mapper.Map(ocorrenciaParaAtualizar, ocorrencia);
-        await repositorio.AtualizarOcorrenciaAsync(ocorrencia);
-        return NoContent();
-    }
-
     [HttpPut("{id}/status")]
     public async Task<IActionResult> AtualizarStatus(int id, [FromBody] AtualizarStatusRequest requisicao)
     {

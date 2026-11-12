@@ -56,37 +56,6 @@ public class UsuarioController(IUsuarioRepository repositorio, IMapper mapper) :
         return NoContent();
     }
 
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> AtualizarUsuarioParcial(int id, JsonPatchDocument<AtualizarUsuarioPatchRequest> patch)
-    {
-        if (patch == null)
-        {
-            return BadRequest("O documento de patch não pode ser nulo.");
-        }
-
-        var usuario = await repositorio.ListarPorIdAsync(id);
-        if (usuario == null) return NotFound();
-        var usuarioParaAtualizar = new AtualizarUsuarioPatchRequest();
-
-        try
-        {
-            patch.ApplyTo(usuarioParaAtualizar, ModelState);
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest($"Operação de patch inválida: {ex.Message}");
-        }
-
-        if (!TryValidateModel(usuarioParaAtualizar))
-        {
-            return ValidationProblem(ModelState);
-        }
-
-        mapper.Map(usuarioParaAtualizar, usuario);
-        await repositorio.AtualizarUsuarioAsync(usuario);
-        return NoContent();
-    }
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletarUsuario(int id)
     {

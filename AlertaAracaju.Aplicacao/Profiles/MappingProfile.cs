@@ -11,21 +11,14 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Mapeamento de Ocorrencias
-        CreateMap<CriarOcorrenciaRequest, Ocorrencia>();
+        // Ocorrencia
         CreateMap<CoordenadasRequest, Coordenadas>();
         CreateMap<AtualizarOcorrenciaRequest, Ocorrencia>();
-        CreateMap<AtualizarOcorrenciaPatchRequest, Ocorrencia>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
         CreateMap<Ocorrencia, OcorrenciaResponse>();
         CreateMap<Coordenadas, CoordenadasResponse>();
 
-        // Mapeamentos de Usuario
-        CreateMap<CriarUsuarioRequest, Usuario>();
+        // Usuario
         CreateMap<AtualizarUsuarioRequest, Usuario>();
-        CreateMap<AtualizarUsuarioPatchRequest, Usuario>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         CreateMap<Usuario, UsuarioResponse>();
     }
 }

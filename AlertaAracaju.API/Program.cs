@@ -4,7 +4,7 @@ using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
 using AlertaAracaju.Infraestrutura.Repositorios;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +24,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers().AddNewtonsoftJson(opts =>
-    opts.SerializerSettings.Converters.Add(new StringEnumConverter { AllowIntegerValues = false }));
+builder.Services.AddControllers().AddJsonOptions(opts =>
+    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(allowIntegerValues: false)));
 
 builder.Services.AddProblemDetails();
 
