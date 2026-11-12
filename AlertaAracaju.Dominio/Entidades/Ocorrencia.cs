@@ -1,6 +1,7 @@
 ﻿using AlertaAracaju.Dominio.Enums;
 
 namespace AlertaAracaju.Dominio.Entidades;
+
 public class Ocorrencia
 {
     protected Ocorrencia()
@@ -10,7 +11,7 @@ public class Ocorrencia
         Localizacao = null!;
     }
 
-    public Ocorrencia(int id, string titulo, string detalhes, StatusOcorrencia status,Categoria categoria, Urgencia urgencia, Coordenadas localizacao)
+    public Ocorrencia(int id, string titulo, string detalhes, StatusOcorrencia status, Categoria categoria, Urgencia urgencia, Coordenadas localizacao)
     {
         Id = id;
         Titulo = titulo;
@@ -35,6 +36,17 @@ public class Ocorrencia
     public void AlterarStatus(StatusOcorrencia novoStatus)
     {
         Status = novoStatus;
+    }
+
+    public void Atualizar(string titulo, string detalhes, Coordenadas localizacao,
+                      Categoria categoria, Urgencia urgencia, StatusOcorrencia status)
+    {
+        Titulo = titulo;
+        Detalhes = detalhes;
+        Localizacao = localizacao;
+        Categoria = categoria;
+        Urgencia = urgencia;
+        Status = status;
     }
 }
 

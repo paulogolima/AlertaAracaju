@@ -3,6 +3,7 @@ using AlertaAracaju.Aplicacao.Servicos;
 using AlertaAracaju.Dominio.Interface;
 using AlertaAracaju.Infraestrutura.Data;
 using AlertaAracaju.Infraestrutura.Repositorios;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -39,7 +40,14 @@ builder.Services.AddHttpClient<IServicoIA, GeminiAIService>(client =>
     client.Timeout = TimeSpan.FromSeconds(5);
 });
 
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.Services.GetRequiredService<IMapper>()
+        .ConfigurationProvider.AssertConfigurationIsValid();
+}
 
 app.UseExceptionHandler();
 

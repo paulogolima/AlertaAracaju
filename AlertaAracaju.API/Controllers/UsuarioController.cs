@@ -3,7 +3,6 @@ using AlertaAracaju.Aplicacao.Dtos.Responses.Usuario;
 using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Interface;
 using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlertaAracaju.API.Controllers;
@@ -17,7 +16,7 @@ public class UsuarioController(IUsuarioRepository repositorio, IMapper mapper) :
     {
         var usuario = new Usuario(
             id: 0,
-            nome: requisicao.Nome,
+            nome:requisicao.Nome,
             email: requisicao.Email,
             senhaHash: requisicao.SenhaHash
             );

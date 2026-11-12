@@ -1,12 +1,10 @@
 ﻿using AlertaAracaju.Aplicacao.Dtos.Requests.Ocorrencia;
 using AlertaAracaju.Aplicacao.Dtos.Responses.Ocorrencia;
-
 using AlertaAracaju.Aplicacao.Servicos;
 using AlertaAracaju.Dominio.Entidades;
 using AlertaAracaju.Dominio.Enums;
 using AlertaAracaju.Dominio.Interface;
 using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlertaAracaju.API.Controllers;
