@@ -40,7 +40,6 @@ builder.Services.AddHttpClient<IServicoIA, GeminiAIService>(client =>
     client.Timeout = TimeSpan.FromSeconds(5);
 });
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

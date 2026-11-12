@@ -16,7 +16,7 @@ public class UsuarioController(IUsuarioRepository repositorio, IMapper mapper) :
     {
         var usuario = new Usuario(
             id: 0,
-            nome:requisicao.Nome,
+            nome: requisicao.Nome,
             email: requisicao.Email,
             senhaHash: requisicao.SenhaHash
             );

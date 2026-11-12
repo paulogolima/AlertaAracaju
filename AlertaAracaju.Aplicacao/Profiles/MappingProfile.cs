@@ -13,7 +13,10 @@ public class MappingProfile : Profile
     {
         // Ocorrencia
         CreateMap<CoordenadasRequest, Coordenadas>();
-        CreateMap<AtualizarOcorrenciaRequest, Ocorrencia>();
+        CreateMap<AtualizarOcorrenciaRequest, Ocorrencia>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.DataEHora, o => o.Ignore())
+            .ForMember(d => d.Apoio, o => o.Ignore());
         CreateMap<Ocorrencia, OcorrenciaResponse>();
         CreateMap<Coordenadas, CoordenadasResponse>();
 
