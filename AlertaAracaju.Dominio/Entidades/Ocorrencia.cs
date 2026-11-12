@@ -32,6 +32,11 @@ public class Ocorrencia
     public Urgencia Urgencia { get; private set; }
     public int Apoio { get; private set; } = 0;
     public Coordenadas Localizacao { get; private set; }
+
+    public void AlterarStatus(StatusOcorrencia novoStatus)
+    {
+        Status = novoStatus;
+    }
 }
 
 public class Coordenadas

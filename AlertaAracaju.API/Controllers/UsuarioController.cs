@@ -16,9 +16,9 @@ public class UsuarioController(IUsuarioRepository repositorio, IMapper mapper) :
     {
         var usuario = new Usuario(
             id: 0,
-            nome: requisicao.Nome,
-            email: requisicao.Email,
-            senhaHash: requisicao.SenhaHash
+            nome: requisicao.Nome!,
+            email: requisicao.Email!,
+            senhaHash: requisicao.SenhaHash!
             );
 
         await repositorio.CriarUsuarioAsync(usuario);
