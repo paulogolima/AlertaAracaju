@@ -22,11 +22,4 @@ public class Usuario
     public string Email { get; private set; }
     public string SenhaHash { get; private set; }
     public DateTime DataEHora { get; private set; } = DateTime.UtcNow;
-
-    public void Atualizar(string nome, string email, string senhaHash)
-    {
-        Nome = nome;
-        Email = email;
-        SenhaHash = senhaHash;
-    }
 }
