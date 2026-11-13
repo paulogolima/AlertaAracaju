@@ -21,7 +21,9 @@ public class MappingProfile : Profile
         CreateMap<Coordenadas, CoordenadasResponse>();
 
         // Usuario
-        CreateMap<AtualizarUsuarioRequest, Usuario>();
+        CreateMap<AtualizarUsuarioRequest, Usuario>()
+            .ForMember(d => d.Id, u => u.Ignore())
+            .ForMember(d => d.DataEHora, u => u.Ignore());
         CreateMap<Usuario, UsuarioResponse>();
     }
 }

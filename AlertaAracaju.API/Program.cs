@@ -13,7 +13,10 @@ var connectionString = builder.Configuration.GetConnectionString("OcorrenciaConn
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseNpgsql(connectionString, b => b.MigrationsAssembly("AlertaAracaju.API")));
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.LicenseKey = builder.Configuration["LicenseKey"];
+}, typeof(Program));
 
 builder.Services.AddCors(options =>
 {
