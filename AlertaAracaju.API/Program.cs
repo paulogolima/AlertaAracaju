@@ -15,8 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.LicenseKey = builder.Configuration["LicenseKey"];
-}, typeof(Program));
+    cfg.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
+}, typeof(MappingProfile).Assembly);
 
 builder.Services.AddCors(options =>
 {
